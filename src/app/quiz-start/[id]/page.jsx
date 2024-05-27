@@ -2,9 +2,11 @@
 import useGlobalContextProvider from "@/app/ContextApi";
 import {faCode, faStopwatch} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React from 'react';
+import React ,{useState, useEffect} from 'react';
 import QuizStartHeader from 'D:/Web/tracnghiem/tracnghiem/tracnghiem/src/app/Components/QuizStartPage/QuizStartHeader.js';
 import QuizStartQuestions from 'D:/Web/tracnghiem/tracnghiem/tracnghiem/src/app/Components/QuizStartPage/QuizStartQuestions';
+import { useRouter } from "next/navigation";
+
 
 function Page (props){
     const {allQuizzes, quizToStartObject } = useGlobalContextProvider();

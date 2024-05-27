@@ -2,6 +2,7 @@
 import React from "react";
 import QuizCard from './QuizCard';
 import PlaceHolder from './PlaceHolder';
+import DropDown from "./DropDown";
 import Image from "next/image";
 import useGlobalContextProvider from "../ContextApi";
 
@@ -11,12 +12,13 @@ function QuizzesArea({props}){
     return (
         <div className ="poppins mx-12 mt-10">
             <div>
-                {user.isLogged &&(
+                {user.isLogged ? (
                     <>
                         {allQuizzes.length === 0 ? (
                             <PlaceHolder />
                         ) : (
                             <div>
+                                <DropDown />
                                 <h2 className="text-xl font-bold">My Quizzes</h2> 
                                 <div className="mt-6 flex gap-2 flex-wrap">
                                     {allQuizzes.map((singleQuiz,quizIndex) => (
@@ -37,7 +39,27 @@ function QuizzesArea({props}){
                             </div>
                         )}
                     </>
-                )}
+                    ) : (
+                        <div className="h-96 flex flex-col gap-4 justify-center items-center">
+                            <h2 className="font-bold text-5xl text-red-700">
+                                Learn with PTIT
+                            </h2>
+                            <span className="text-xl font-light">
+                                Unlock Your Potential with Personalized Quizzes
+                            </span>
+                            <button
+                                onClick={() => {
+                                    setUser((prevUser) => ({
+                                        ...prevUser,
+                                        isLogged: true
+                                    }));
+                                }}
+                                className="p-4 bg-red-700 text-white rounded-md"
+                            >
+                                Get Started Now!
+                            </button>
+                        </div>
+                    )}
             </div>
             
         </div>

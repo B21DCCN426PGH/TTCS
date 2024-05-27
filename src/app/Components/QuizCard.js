@@ -12,8 +12,8 @@ function successRate(singleQuiz) {
     let successRate = 0;
     
     singleQuiz.quizQuestions.forEach((question) => {
-        totalAttemptes += question.statistics.totalAttempts;
-        correctQuestions += question.statistics.correctAttempts;
+        totalAttemptes += question?.statistics?.totalAttempts??0;
+        correctQuestions += question?.statistics?.correctAttempts??0;
         
     });
 
@@ -22,11 +22,28 @@ function successRate(singleQuiz) {
 }
 
 function QuizCard({singleQuiz}) {
-    const { quizToStartObject } = useGlobalContextProvider();
+    const { quizToStartObject, dropDownToggleObject, threeDotsPositionsObject,selectedQuizObject } = useGlobalContextProvider();
+    const {setDropDownToggle} = dropDownToggleObject;
+    const {setThreeDotsPositions} = threeDotsPositionsObject;
+    const {selectedQuiz,setSelectedQuiz} = selectedQuizObject;
     const { setSelectQuizToStart } = quizToStartObject; 
     const { quizTitle, quizQuestions, icon } = singleQuiz;
     const totalQuestions = quizQuestions.length ;
     const globalSuccessRate = successRate(singleQuiz);
+
+    function openDropDownMenu(event){
+        const xPos = event.clientX;
+        const yPos = event.clientY;
+        setThreeDotsPositions({x: xPos, y: yPos});
+        if(event){
+            console.log(event);
+            event.stopPropagation();
+        }
+        setDropDownToggle(true);
+        setSelectedQuiz (singleQuiz);
+    }
+
+    console.log(selectedQuiz)
 
     return(
         <div className="rounded-[10px] flex flex-col gap-2 border border-red-300 bg-white p-4 ">
@@ -36,6 +53,7 @@ function QuizCard({singleQuiz}) {
                     height={13}
                     width={13}
                     icon={faEllipsis}
+                    onClick={openDropDownMenu}
                     />
                 </div>
                 <FontAwesomeIcon className="text-white"

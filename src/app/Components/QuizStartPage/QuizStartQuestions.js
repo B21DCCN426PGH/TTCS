@@ -25,12 +25,12 @@ function QuizStartQuestions({onUpdateTime}){
         setTimer(time);
         interval = setInterval(() => {
             setTimer((currentTimer) => {
-                onUpdateTimer(currentTimer);
-                if(currrentTime ===0 ){
+                onUpdateTime(currentTimer);
+                if(currentTimer ===0 ){
                     clearInterval(interval);
                     return 0;
                 }
-                return currrentTime -1;
+                return currentTimer -1;
             });
         },1000);
             
@@ -123,9 +123,10 @@ function QuizStartQuestions({onUpdateTime}){
         }
         allQuizzes[indexOfQuizSelected].quizQuestions[currentQuestionIndex].statistics.correctAttempts +=1;
         
-        setScore((prevState) => prevState + 1 )
+        setScore((prevState) => prevState + 1 );
 
         toast.success("correct answer");
+        setUserXP((prevState) => prevState+1);
         
         if(currentQuestionIndex === quizQuestions.length-1 && 
             allQuizzes[indexOfQuizSelected].quizQuestions[currentQuestionIndex].answeredResult ===
